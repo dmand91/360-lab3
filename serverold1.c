@@ -18,7 +18,7 @@
 #include <queue>
 #include <semaphore.h>
 
-//DEFINITIONS ARE HERE
+
 #define SOCKET_ERROR        -1
 #define BUFFER_SIZE         10000
 #define QUEUE_SIZE           5
