@@ -18,7 +18,7 @@
 #include <queue>
 #include <semaphore.h>
 
-//DEFINITIONS ARE HERE
+
 #define SOCKET_ERROR        -1
 #define BUFFER_SIZE         10000
 #define QUEUE_SIZE           5
@@ -26,7 +26,7 @@
 #define NUM_QUEUE            20
 
 sem_t full, empty, mutex;
-
+ char strBaseDirG[STR_SIZE];
 class socketqueue {
     std::queue<int> stlqueue;
 public:
@@ -60,8 +60,8 @@ void *acceptRequest(void* args_void)
     char pBuffer[BUFFER_SIZE];
     char strBaseDir[STR_SIZE];
     struct arg_struct args = (struct arg_struct )args;
-    strcpy(strBaseDir, args.strBaseDir);
-    hServerSocket = (int)args.hServerSocket;
+    strcpy(strBaseDir,strBaseDirG);
+    hServerSocket =1;
     for (;;) {
         hSocket = sockqueue.pop();
 
@@ -74,6 +74,7 @@ void *acceptRequest(void* args_void)
         printf("Got rval %d, path %s\n", rval, path);
         char fullpath[MAXPATH];
         // TODO- pass in base directory
+	printf("the base path: %s\n",strBaseDir);
         sprintf(fullpath, "%s%s", strBaseDir, path);
         printf("fullpath %s\n", fullpath);
         respond(hSocket, fullpath, path);
@@ -187,6 +188,7 @@ int main(int argc, char* argv[])
     struct arg_struct args_in;
     args_in.hServerSocket = hServerSocket;
     strcpy(args_in.strBaseDir, strBaseDir);
+    strcpy(strBaseDirG,strBaseDir);
 
     for (t = 0; t < numThreads; t++) {
         printf("In main: creating thread %ld\n", t);
@@ -210,4 +212,5 @@ void handler (int status)
 {
     printf("received signal %d\n", status);
 }
+
 

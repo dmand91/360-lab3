@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for ((i=0; i<20; i++))
+    do
+       GET -dUe -t 10 http://ec2-54-213-68-133.us-west-2.compute.amazonaws.com:3002/home/bitnami/htdocs/PROJECTS/sockets/lab2/mygif.gif &
+    done
+~                                                                                         
+~                                                                                         
+~                                                                                         
+~                    

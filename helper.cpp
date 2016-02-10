@@ -15,17 +15,6 @@
 #define STR_SIZE             150
 
 using namespace std;
-//GETS THE FILE SIZE=====================
-
-int get_file_size(std::string path)
-{
-	struct stat filestat;
-	if(stat(path.c_str(), &filestat)){
-		return -1;
-	}
-	//check brackets
-	return filestat.st_size;
-}
 
 
 
@@ -107,7 +96,7 @@ void respond(int hSocket, char * fullpath, char * fname)
 
 	try {
 		if(stat(fullpath, &filestat)) {
-			sprintf(pBuffer, "HTTP/1.1 404 Not Found\r\nContent-Type:text/html\r\n\r\n<html><h1>SORRY FILE/PATH NOT FOUND. PLEASE TRY AGAIN</h1></html>");
+			sprintf(pBuffer, "HTTP/1.1 404 Not Found\r\nContent-Type:text/html\r\n\r\n<html><h1>404, Sorry not found!!!!! PLEASE TRY AGAIN</h1></html>");
 			write(hSocket,pBuffer,strlen(pBuffer));
 		}
 		else if(S_ISREG(filestat.st_mode)) {
@@ -139,7 +128,7 @@ void respond(int hSocket, char * fullpath, char * fname)
 			else {
 				dir.sort(compare_nocase);
 				stringstream trace;
-				trace << "<h1>DIRECTORY LISTING</h1><br><ul>";
+				trace << "<ul>";
 				list<char*>::iterator it;
 				for (it=dir.begin(); it!=dir.end(); ++it)
 					if (has_slash)
@@ -158,5 +147,6 @@ void respond(int hSocket, char * fullpath, char * fname)
 		write(hSocket,pBuffer,strlen(pBuffer));
 	}
 }
+
 
 
